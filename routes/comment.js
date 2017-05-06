@@ -91,11 +91,14 @@ router.get('/test1', function (req, res, next) {
             }
 
             async.eachSeries(json.data, function(obj, callback){
-               var createTime = obj.created_time;
+               //var createTime = obj.created_time;
                 var message = obj.message;
                 db.insertNode({
                 }, function (err, node) {
                   var id = node._id;
+                  var color = _.random(0,1.0,true);
+                  var createTime = 0;
+                  var count = _.random(20,40);
                   if (err) {
                     return callback(err)
                   }else{
@@ -105,6 +108,8 @@ router.get('/test1', function (req, res, next) {
                           node_id : id,
                           type : false,
                           message : message,
+                          color: color,
+                          count : count,
                           created : createTime
                         }
 
@@ -209,8 +214,10 @@ router.get('/test11', function(req, res, next){
                     color.push(_.random(0,10));
                     color.push(_.random(0,10));
                     color.push(_.random(0,10));
-                    var size  = _.random(20,40);
-                     var tmp = {
+                    
+                    var size  = result[i]["count"];
+                    
+                    var tmp = {
                        id : id,
                        name: name,
                        color : color,
