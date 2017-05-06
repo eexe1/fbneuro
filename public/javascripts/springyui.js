@@ -126,6 +126,9 @@ jQuery.fn.springy = function(params) {
 
 	var getTextWidth = function(node) {
 		var text = (node.data.label !== undefined) ? node.data.label : node.id;
+        if(text.length > 5){
+            text = text.substr(0,6);
+        }
 		if (node._width && node._width[text])
 			return node._width[text];
 
