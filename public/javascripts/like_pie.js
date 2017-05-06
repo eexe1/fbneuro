@@ -21,14 +21,14 @@ var tip = d3.tip()
 var arc = d3.svg.arc()
     .innerRadius(innerRadius)
     .outerRadius(function (d) {
-        return (radius - innerRadius) * (d.data.score / 100.0) + innerRadius;
+        return (radius - innerRadius) * (d.data.score / 10.0) + innerRadius;
     });
 
 var outlineArc = d3.svg.arc()
     .innerRadius(innerRadius)
     .outerRadius(radius);
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#chart").append("svg")
     .attr("width", width)
     .attr("height", height)
     .append("g")
@@ -38,16 +38,20 @@ svg.call(tip);
 
 d3.json('/comment/like', function(error, json) {
 
-    var data = JSON.parse(json);
-    data.forEach(function(d) {
-        // d.id     =  d.id;
-        d.order  = +d.order;
-        d.color  =  d.color;
-        d.weight = 1;
-        d.count  = +d.count;
-        d.width  = 1;
-        d.emotion  =  d.emotion;
-    });
+    console.log(json);
+    var data = [];
+    var colors = ["#9E0041", "#E1514B", "#FEC574", "#FAE38C", "#6CC4A4", "#4776B4"];
+    for(var i = 0; i < json.length; i++){
+        var slice = {};
+        slice.order  = i;
+        slice.color  = colors[i];
+        slice.weight = 1;
+        slice.score  = json[i].count;
+        slice.width  = 1;
+        slice.label  =  json[i].emotion;
+        data.push(slice);
+    }
+
     // for (var i = 0; i < data.score; i++) { console.log(data[i].id) }
 
     var path = svg.selectAll(".solidArc")
@@ -74,9 +78,6 @@ d3.json('/comment/like', function(error, json) {
         data.reduce(function(a, b) {
             //console.log('a:' + a + ', b.score: ' + b.score + ', b.weight: ' + b.weight);
             return a + (b.score * b.weight);
-        }, 0) /
-        data.reduce(function(a, b) {
-            return a + b.weight;
         }, 0);
 
     svg.append("svg:text")

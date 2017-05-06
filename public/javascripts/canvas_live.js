@@ -82,11 +82,15 @@ function getLive() {
         nodesGlobal = {};
         // console.log(data);
         var json = JSON.parse(data);
-        // console.log(json);
+        console.log(json);
         var nodes = json.nodes;
         var relationships = json.relationship;
         // console.log(json);
         for (var i = 0; i < nodes.length; i++) {
+            if(nodes[i] === null){
+                continue;
+            }
+            // console.log(nodes[i]);
             var node_color = calcColor(nodes[i].color);
             var node = graph.newNode({
                 label: nodes[i].name,
@@ -99,6 +103,7 @@ function getLive() {
         }
         for (var j = 0; j < relationships.length; j++) {
             var rel =  relationships[j];
+            // console.log(rel);
             graph.newEdge(nodesGlobal[rel.id_1], nodesGlobal[rel.id_2], {color: '#EB6841'});
         }
     });

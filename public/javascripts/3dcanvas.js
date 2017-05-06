@@ -39,8 +39,8 @@ function calcColor(colors) {
 //     }
 // });
 
-var SCREEN_WIDTH = window.innerWidth,
-    SCREEN_HEIGHT = window.innerHeight,
+var SCREEN_WIDTH = window.innerWidth - 400,
+    SCREEN_HEIGHT = window.innerHeight - 100,
     mouseX = 0, mouseY = 0,
     windowHalfX = window.innerWidth / 2,
     windowHalfY = window.innerHeight / 2,
@@ -92,17 +92,17 @@ function textSprite(text, _color, params) {
 function init() {
     var container, separation = 100, amountX = 50, amountY = 50,
         particles, particle, text;
-    container = document.createElement('div');
-    document.body.appendChild(container);
+    // container = document.createElement('div');
+    // document.body.appendChild(container);
     camera = new THREE.PerspectiveCamera(75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000);
     camera.position.z = 1000;
     // EditorControls(THREE);
-    const controls = new THREE.EditorControls(camera, container);
+    const controls = new THREE.EditorControls(camera, document.getElementById("wrapper"));
     scene = new THREE.Scene();
     renderer = new THREE.CanvasRenderer();
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-    container.appendChild(renderer.domElement);
+    document.getElementById("canvas").appendChild(renderer.domElement);
     // particles
     var PI2 = Math.PI * 2;
     var material = new THREE.SpriteCanvasMaterial({
