@@ -180,14 +180,15 @@ function render() {
     // camera.position.x += ( mouseX - camera.position.x ) * .05;
     // camera.position.y += ( - mouseY + 200 - camera.position.y ) * .05;
     camera.lookAt(new THREE.Vector3(0, 0, 0));
+    renderer.setClearColor( 0xEFEFEF );
     renderer.render(scene, camera);
 }
 
 
 var nodesGlobal = {};
-var index = 2;
+var index = 109;
 function getLive() {
-    if (index > 109) {
+    if (index > 365) {
         return;
     }
     $.get("comment/getdata?time=" + index, function (data) {
@@ -209,7 +210,11 @@ function getLive() {
         console.log(json);
         for (var i = 0; i < nodes.length; i++) {
             var node_color = calcColor(nodes[i].color);
-
+            console.log(node_color);
+            if(i == 0){
+                nodesGlobal[nodes[i].id] = text;
+                continue;
+            }
             var text = textSprite(nodes[i].name, node_color, {});
             text.position.x = Math.random() * 2 - 1;
             text.position.y = Math.random() * 2 - 1;
@@ -223,7 +228,7 @@ function getLive() {
         }
 
 
-        index++;
+        // index++;
     });
 }
 getLive();
