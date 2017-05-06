@@ -307,18 +307,28 @@ jQuery.fn.springy = function(params) {
 			var boxWidth = contentWidth + paddingX;
 			var boxHeight = contentHeight + paddingY;
 
+			var radius = node.data.size;
+			var color = node.data.color;
+			if (radius === undefined){
+				radius = 20;
+			}
+			if (color === undefined){
+				
+			}
 			// clear background
-			ctx.clearRect(s.x - boxWidth/2, s.y - boxHeight/2, boxWidth, boxHeight);
-
+			// ctx.clearRect(s.x - boxWidth/2, s.y - boxHeight/2, boxWidth, boxHeight);
+            ctx.beginPath();
 			// fill background
 			if (selected !== null && selected.node !== null && selected.node.id === node.id) {
-				ctx.fillStyle = "#FFFFE0";
+				ctx.fillStyle = "#00FFFF";
 			} else if (nearest !== null && nearest.node !== null && nearest.node.id === node.id) {
-				ctx.fillStyle = "#EEEEEE";
+				ctx.fillStyle = "#00FF00";
 			} else {
-				ctx.fillStyle = "#FFFFFF";
+				ctx.fillStyle = "#FFFF00";
 			}
-			ctx.fillRect(s.x - boxWidth/2, s.y - boxHeight/2, boxWidth, boxHeight);
+			// ctx.fillRect(s.x - boxWidth/2, s.y - boxHeight/2, boxWidth, boxHeight);
+			ctx.arc(s.x, s.y, radius, 0, 2*Math.PI, false);
+            ctx.fill();
 
 			if (node.data.image == undefined) {
 				ctx.textAlign = "left";

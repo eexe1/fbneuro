@@ -5,11 +5,15 @@ var graph = new Springy.Graph();
 
 var dennis = graph.newNode({
     label: 'Dennis',
-    ondoubleclick: function() { console.log("Hello!"); }
+    ondoubleclick: function() { console.log("Hello!"); },
+    size: 25
 });
-var michael = graph.newNode({label: 'Michael'});
-var jessica = graph.newNode({label: 'Jessica'});
-var timothy = graph.newNode({label: 'Timothy'});
+var michael = graph.newNode({label: 'MichaelMichaelMichaelMichaelMichaelMichael',
+    size: 25});
+var jessica = graph.newNode({label: 'Jessica',
+    size: 40});
+var timothy = graph.newNode({label: 'Timothy',
+    size: 55});
 var barbara = graph.newNode({label: 'Barbara'});
 var franklin = graph.newNode({label: 'Franklin'});
 var monty = graph.newNode({label: 'Monty'});
