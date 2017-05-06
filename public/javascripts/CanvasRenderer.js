@@ -35,7 +35,6 @@ THREE.SpriteCanvasMaterial.prototype.clone = function () {
 
 THREE.CanvasRenderer = function ( parameters ) {
 
-	console.log("asd");
 	console.log( 'THREE.CanvasRenderer', THREE.REVISION );
 
 	parameters = parameters || {};

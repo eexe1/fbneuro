@@ -51,9 +51,48 @@ var SCREEN_WIDTH = window.innerWidth,
     camera, scene, renderer;
 init();
 animate();
+function textSprite(text, params) {
+    var font = "Helvetica",
+        size = 8,
+        color = "#676767";
+
+    font = "bold " + size + "px " + font;
+
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    context.font = font;
+
+    // get size data (height depends only on font size)
+    var metrics = context.measureText(text),
+        textWidth = metrics.width;
+
+    canvas.width = textWidth + 3;
+    canvas.height = size + 3;
+
+    context.font = font;
+    context.fillStyle = color;
+    context.fillText(text, 0, size + 3);
+
+    // canvas contents will be used for a texture
+    var texture = new THREE.Texture(canvas);
+    texture.needsUpdate = true;
+
+    var mesh = new THREE.Mesh(
+        new THREE.PlaneGeometry(canvas.width, canvas.height),
+        new THREE.MeshBasicMaterial({
+            map: texture,
+            side: THREE.DoubleSide
+        }));
+
+    console.log(canvas.width + 'x' + canvas.height);
+    console.log(texture);
+    console.log(mesh);
+
+    return mesh;
+}
 function init() {
     var container, separation = 100, amountX = 50, amountY = 50,
-        particles, particle;
+        particles, particle, text;
     container = document.createElement('div');
     document.body.appendChild(container);
     camera = new THREE.PerspectiveCamera( 75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000 );
@@ -73,6 +112,17 @@ function init() {
             context.fill();
         }
     } );
+    for ( var i = 0; i < 100; i ++ ) {
+        // particle = new THREE.Sprite( material );
+        text = textSprite("LIKE", {});
+        text.position.x = Math.random() * 2 - 1;
+        text.position.y = Math.random() * 2 - 1;
+        text.position.z = Math.random() * 2 - 1;
+        text.position.normalize();
+        text.position.multiplyScalar( Math.random() * 10 + 450 );
+        text.scale.multiplyScalar( 2 );
+        scene.add( text );
+    }
     for ( var i = 0; i < 1000; i ++ ) {
         particle = new THREE.Sprite( material );
         particle.position.x = Math.random() * 2 - 1;
