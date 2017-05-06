@@ -211,7 +211,63 @@ router.get('/generate', function (req, res, next) {
         }
     )
 });
+router.get('/generate_by_doc1', function (req, res, next) {
+    fs.readFile(__dirname + '/data.json', {flag: 'r+', encoding: 'utf8'}, function (error, data) {
+            // console.log(data);
+            //return res.send("data");
+            // 'https://graph.facebook.com/v2.9/515904358769189/comments?limits=100&access_token='+access_token,
+            // function (error, response, body) {
+            if (error) {
+                return res.send("error");
+            }
+            var json = JSON.parse(data);
+            //  console.log(json.data);
+            var question_id = req.query.q_id == null ? parent_node_id : req.query.q_id;
+            if (json == null || json.length == null || json.length == 0) {
+                return res.send("no data");
+            }
 
+            async.eachSeries(json, function (obj, callback) {
+                //var createTime = obj.created_time;
+                  var message = obj.key;
+                // db.insertNode({}, function (err, node) {
+                    var id = ""
+                    var color = obj.score;
+                    var createTime = obj.time;
+                    var count = obj.count;
+                    // if (err) {
+                    //     return callback(err)
+                    // } else {
+                        var item = {
+                            user_id: '',
+                            question_id: question_id,
+                            node_id: id,
+                            type: false,
+                            message: message,
+                            color: color,
+                            count: count,
+                            created: createTime
+                        }
+
+                        ItemModal.create(item, (err, docs) => {
+                            if (err) {
+                                callback(err);
+                            } else {
+                              callback(null);
+                            }
+                        })
+                    // }
+                // });
+            }, function done(err) {
+                if (err) {
+                    res.send(err);
+                } else {
+                    res.send({});
+                }
+            });
+        }
+    )
+});
 
 router.get('/generate_by_doc', function (req, res, next) {
     fs.readFile(__dirname + '/data.json', {flag: 'r+', encoding: 'utf8'}, function (error, data) {
@@ -577,5 +633,132 @@ router.get('/getdata', function (req, res, next) {
     })
 })
 
+router.get('/getdata1', function (req, res, next) {
+    var question_id = req.query.q_id == null ? parent_node_id : req.query.q_id;
+    var condition = {};
+    if ( req.query.times != null) {
+      var condition = {created : req.query.times}
+    }else{
+      var condition = {};
+    }
+    console.log(condition);
+    ItemModal.find(condition, function (err, result) {
+                  if (err) {
+                        res.status(404).send({});
+                    } else {
 
+                        var result_data = {};
+                        var node = new Array();
+                        var relationship = new Array();
+                        //parent_node
+                        /*
+                         */
+                        var id = parent_node_id;
+                        var name = parent_question;
+                        var color = new Array();
+                        color.push(_.random(0, 10));
+                        color.push(_.random(0, 10));
+                        color.push(_.random(0, 10));
+                        color.push(_.random(0, 10));
+                        color.push(_.random(0, 10));
+                        color.push(_.random(0, 10));
+                        //
+                        var size = 40;
+                        var tmp = {
+                            id: id,
+                            name: name,
+                            color: color,
+                            size: size
+                        }
+                        node.push(tmp);
+
+                        for (var i = 0; i < result.length; i++) {
+                                var id = i;
+                                var name = result[i]["message"];
+                                var color = new Array();
+                                var r = 214, g = 90, b = 103;
+                                result[i]["color"]  = result[i]["color"] *2;
+                                if (result[i]["color"] >= 0 && result[i]["color"] <= 0.1) {
+
+                                }
+                                else if (result[i]["color"] > 0.1 && result[i]["color"] <= 0.2) {
+                                    r = 214;
+                                    g = 90;
+                                    b = 103;
+                                } else if (result[i]["color"] > 0.2 && result[i]["color"] <= 0.3) {
+                                    r = 216;
+                                    g = 98;
+                                    b = 103;
+
+                                } else if (result[i]["color"] > 0.3 && result[i]["color"] <= 0.4) {
+                                    r = 218;
+                                    g = 106;
+                                    b = 103;
+
+                                } else if (result[i]["color"] > 0.4 && result[i]["color"] <= 0.5) {
+                                    r = 220;
+                                    g = 114;
+                                    b = 103;
+
+                                } else if (result[i]["color"] > 0.5 && result[i]["color"] <= 0.6) {
+                                    r = 222;
+                                    g = 122;
+                                    b = 103;
+
+                                } else if (result[i]["color"] > 0.6 && result[i]["color"] <= 0.7) {
+                                    r = 224;
+                                    g = 130;
+                                    b = 103;
+
+                                } else if (result[i]["color"] > 0.7 && result[i]["color"] <= 0.8) {
+                                    r = 226;
+                                    g = 138;
+                                    b = 103;
+
+                                } else if (result[i]["color"] >= 0.8 && result[i]["color"] <= 0.9) {
+                                    r = 230;
+                                    g = 154;
+                                    b = 103;
+                                } else if (result[i]["color"] >= 0.9) {
+                                    r = 232;
+                                    g = 162;
+                                    b = 103;
+
+                                }
+                                color.push(0);
+                                color.push(r);
+                                color.push(0);
+                                color.push(g);
+                                color.push(0);
+                                color.push(b);
+
+                                var size = result[i]["count"];
+
+                                var tmp = {
+                                    id: id,
+                                    name: name,
+                                    color: color,
+                                    size: size
+
+                                }
+
+                                var relation = {
+                                    id_1: question_id,
+                                    id_2: id
+                                }
+
+                                node.push(tmp);
+                                relationship.push(relation);
+
+                            // }
+
+                        }
+                        result_data["nodes"] = node;
+                        result_data["relationship"] = relationship;
+                        res.status(200).send(result_data);
+                      }
+
+
+    })
+})
 module.exports = router;
