@@ -73,9 +73,12 @@ router.get('/test1', function (req, res, next) {
 });
 
 router.get('/test2', function(req, res, next){
-    var sql_root = 'Match(n:Admin) return n';
-    var sql_child = 'Match(n:Children) return n';
-    var json = {"label":"test", "color":"#00A0B0", "size":10};
+  var sql_root = 'Match(n:Admin) return n';
+  var sql_child = 'Match(n:Children) return n';
+  var json = {
+      "nodes": [{id:"22",name:"Like",color:[1,1,2,3,4,5],size:20},{id:23,name:"Angry",color:[1,5,5,5,1,1],size:25}],
+      "relationship": [{"id_1":"22","id_2":"23"}]
+  };
 
     db.cypherQuery(sql_root, function (err, result) {
         if (err) {
