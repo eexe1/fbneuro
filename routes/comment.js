@@ -11,7 +11,7 @@ var db = new neo4j(
 );
 var parent_node_id = 735;
 var parent_question = "Live";
-var access_token = "EAACEdEose0cBAP81eobd6uzsAe1PXnxoOfP9YVC68fvZCiXswYNVGZArrjc3kB5Lx5A2rzbyJp5pDUAem3CkEu3VwkN6yDQ0ydFr7gZCCJj8rCQMJy20Xo7NfOcvUBCy1vqdFPM6TDP5wtvgZBjoXI74LlCsRpa5ZCOZBCcx62XtKMQ1JRXq74RnfWkk201TMZD";
+var access_token = "952389941455587|IoKbfdmXnF0hWAFPo4SWXoq3Ud4";
 var Schema = mongoose.Schema
 var Item = new Schema({
     user_id: {
@@ -350,6 +350,9 @@ router.get('/live', function (req, res, next) {
     request(
         'https://graph.facebook.com/v2.9/516006922092266/comments?access_token=' + access_token,
         function (error, response, body) {
+            if(error){
+                return;
+            }
             var json = JSON.parse(body);
             console.log(json.data);
             var result_data = {};
@@ -409,8 +412,8 @@ router.get('/live', function (req, res, next) {
 
             var relationship = new Array();
             for (i = 1; i < nodes.length; i++) {
-                if(nodes[i]==undefined) {
-                    i++;
+                if(nodes[i] === undefined) {
+                    continue;
                 }
                 relationship.push(new Relation("-1", nodes[i].id));
             }
