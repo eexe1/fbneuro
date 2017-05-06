@@ -9,8 +9,8 @@ var fs = require("fs")
 var db = new neo4j(
     'http://fb-hackathon:b.rFQqK9s1nX47.wpq2kglzGgEvDQpd@hobby-cjemgdgfojekgbkegdhoogpl.dbs.graphenedb.com:24789'
 );
-var parent_node_id = 21;
-var parent_question = "This is a question";
+var parent_node_id = 735;
+var parent_question = "Live";
 var access_token = "EAACEdEose0cBAA4nIvD2VjSfAFkkGnXFNZCvbIaiBoRnkQZCYewWrpnrSplWo634HZAQwlEnS38flzZAhlX1FBHLWZBZAsJg6VZB7C2u6GKO8MMGeFwbnk98DN0TXuJFAlZCQfD3wEB2tFfRsfSxIhTP9sCOaEzqoVXntiT9eCk0nh9fIiVvQOgagVSyb5jaGZAwZD";
 var Schema = mongoose.Schema
 var Item = new Schema({
@@ -428,7 +428,7 @@ router.get('/getdata', function (req, res, next) {
                                 var id = result[i]["node_id"];
                                 var name = result[i]["message"];
                                 var color = new Array();
-                                var r = 255, g = 255, b = 255;
+                                var r = 214, g = 90, b = 103;
                                 if (result[i]["color"] >= 0 && result[i]["color"] <= 0.1) {
 
                                 }
@@ -456,21 +456,21 @@ router.get('/getdata', function (req, res, next) {
                                     g = 122;
                                     b = 103;
 
-                                } else if (result[i]["color"] > 0.6 && result[i]["color"] <= 0.6) {
+                                } else if (result[i]["color"] > 0.6 && result[i]["color"] <= 0.7) {
                                     r = 224;
                                     g = 130;
                                     b = 103;
 
-                                } else if (result[i]["color"] > 0.7 && result[i]["color"] <= 0.7) {
+                                } else if (result[i]["color"] > 0.7 && result[i]["color"] <= 0.8) {
                                     r = 226;
                                     g = 138;
                                     b = 103;
 
-                                } else if (result[i]["color"] >= 0.8 && result[i]["color"] <= 0.8) {
+                                } else if (result[i]["color"] >= 0.8 && result[i]["color"] <= 0.9) {
                                     r = 230;
                                     g = 154;
                                     b = 103;
-                                } else if (result[i]["color"] >= 0.9 && result[i]["color"] <= 1) {
+                                } else if (result[i]["color"] >= 0.9) {
                                     r = 232;
                                     g = 162;
                                     b = 103;

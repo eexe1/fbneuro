@@ -179,7 +179,7 @@ function render() {
     // camera.position.x += ( mouseX - camera.position.x ) * .05;
     // camera.position.y += ( - mouseY + 200 - camera.position.y ) * .05;
     camera.lookAt(new THREE.Vector3(0, 0, 0));
-    renderer.setClearColor( 0xEFEFEF );
+    // renderer.setClearColor( 0xEFEFEF );
     renderer.render(scene, camera);
 }
 
@@ -227,7 +227,7 @@ function getLive() {
         }
 
 
-        // index++;
+        index++;
     });
 }
 getLive();
