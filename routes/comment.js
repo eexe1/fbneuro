@@ -281,6 +281,27 @@ router.get('/test3', function(req, res, next){
 })
 
 
+router.get("/cleardb",function(req, res, next){
+  //
+   var sql_root = 'MATCH (s),(s)-[r:Answer]->(k) WHERE ID(s) = '+parent_node_id+' DELETE r';
+   db.cypherQuery(sql_root, function (err, result) {
+        if (err) {
+            res.status(404).send("delete fail");
+        }else{
+            ItemModal.remove({}, function(err, result){
+              if(err){
+                res.status(404).send("fail to delete mongodb");
+              }else{
+                res.status(200).send("success");
+              }
+            });
+            // res.json(json);
+        }
+  })
+});
+
+
+
 // db.insertNode({
 //   name: 'Ghuffran',
 //   company: 'Modulus',
