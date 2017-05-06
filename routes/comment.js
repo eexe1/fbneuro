@@ -38,4 +38,32 @@ router.get('/test2', function(req, res, next){
 
   })
 })
+
+router.get('/test3', function(req, res, next){
+  var sql_root = 'Match(n:Admin) return n'
+  var sql_child = 'Match(n:Children) return n'
+  var json = {}
+  db.insertNode({
+	  name: 'Ghuffran',
+	  company: 'Modulus',
+	  age: 11
+  }, function (err, node) {
+  if (err) {
+    return res.status(404).send(err);
+  }
+ 	res.send(node);
+  });
+})
+// db.insertNode({
+//   name: 'Ghuffran',
+//   company: 'Modulus',
+//   age: ~~(Math.random() * 100)
+// }, function (err, node) {
+//   if (err) {
+//     return console.log(err);
+//   }
+
+//   // Output node data.
+//   console.log(node);
+// });
 module.exports = router;

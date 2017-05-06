@@ -12,6 +12,14 @@ var comment = require('./routes/comment');
 
 var app = express();
 
+var mongoose = require('mongoose')
+mongoose.connect("mongodb://localhost/fb", {})
+var db = mongoose.connection
+db.on('error', console.error.bind(console, 'connection error:'))
+db.once('open', () => {
+  console.log('DB successfully')
+})
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
