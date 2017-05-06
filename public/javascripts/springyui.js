@@ -313,18 +313,18 @@ jQuery.fn.springy = function(params) {
 				radius = 20;
 			}
 			if (color === undefined){
-				
+                color = "rgb(255,255,0)";
 			}
 			// clear background
 			// ctx.clearRect(s.x - boxWidth/2, s.y - boxHeight/2, boxWidth, boxHeight);
             ctx.beginPath();
 			// fill background
 			if (selected !== null && selected.node !== null && selected.node.id === node.id) {
-				ctx.fillStyle = "#00FFFF";
+				ctx.fillStyle = color;
 			} else if (nearest !== null && nearest.node !== null && nearest.node.id === node.id) {
 				ctx.fillStyle = "#00FF00";
 			} else {
-				ctx.fillStyle = "#FFFF00";
+				ctx.fillStyle = color;
 			}
 			// ctx.fillRect(s.x - boxWidth/2, s.y - boxHeight/2, boxWidth, boxHeight);
 			ctx.arc(s.x, s.y, radius, 0, 2*Math.PI, false);
