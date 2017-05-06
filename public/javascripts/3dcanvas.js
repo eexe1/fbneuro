@@ -14,31 +14,31 @@ function calcColor(colors) {
     var colorMixedB = (colorPercentage[4] + colorPercentage[5]) * 255;
     return "rgb(" + parseInt(colorMixedR) + "," + parseInt(colorMixedG) + "," + parseInt(colorMixedB) + ")";
 }
-var nodesGlobal = {};
-$.get( "comment/test2", function( data ) {
-    if(data === undefined){
-        alert("Error");
-        return;
-    }
-    var json = JSON.parse(data);
-    // console.log(json);
-    var nodes = json.nodes;
-    var relationships = json.relationship;
-    for (var i = 0; i < nodes.length; i++) {
-        var node_color = calcColor(nodes[i].color);
-        // var node = graph.newNode({
-        //     label: nodes[i].name,
-        //     id: nodes[i].id,
-        //     size: nodes[i].size,
-        //     color: node_color});
-        // console.log(nodes[i]);
-
-        // nodesGlobal[nodes[i].id] = node;
-    }
-    for (var j = 0; j < relationships.length; j++) {
-        var rel =  relationships[j];
-    }
-});
+// var nodesGlobal = {};
+// $.get( "comment/test2", function( data ) {
+//     if(data === undefined){
+//         alert("Error");
+//         return;
+//     }
+//     var json = JSON.parse(data);
+//     // console.log(json);
+//     var nodes = json.nodes;
+//     var relationships = json.relationship;
+//     for (var i = 0; i < nodes.length; i++) {
+//         var node_color = calcColor(nodes[i].color);
+//         // var node = graph.newNode({
+//         //     label: nodes[i].name,
+//         //     id: nodes[i].id,
+//         //     size: nodes[i].size,
+//         //     color: node_color});
+//         // console.log(nodes[i]);
+//
+//         // nodesGlobal[nodes[i].id] = node;
+//     }
+//     for (var j = 0; j < relationships.length; j++) {
+//         var rel =  relationships[j];
+//     }
+// });
 
 var SCREEN_WIDTH = window.innerWidth,
     SCREEN_HEIGHT = window.innerHeight,
