@@ -46,109 +46,12 @@ var Item = new Schema({
 
 var ItemModal = mongoose.model('item', Item);
 
-// router.get('/item', function(req, res, next){
-//   var item = {
-//   	user_id : '',
-//   	question_id : '123',
-//     node_id : '',
-//   	type : true,
-//     created : "",
-//     message:""
-//   }
-
-//   ItemModal.create(item, (err, docs) => {
-//       if (err) {
-// 			res.send({});
-//       } else {
-//         var result = {
-//           id: docs._id
-//         }
-//         res.send({})
-//         ;
-//       }
-//     })
-// });
-
-
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     res.send('respond with a resource');
 });
 
-// router.get('/test1', function (req, res, next) {
-//     request(
-//         'https://graph.facebook.com/v2.9/515904358769189/comments?limits=100&access_token='+access_token,
-//         function (error, response, body) {
-//             if(error){
-//               return res.send("error");
-//             }
-//             var json = JSON.parse(body);
-//             console.log(json.data);
-//             var question_id = req.query.q_id  == null ? parent_node_id : req.query.q_id;
-//             if(json == null || json.data ==null ||json.data.length == 0){
-//               return res.send("no data");
-//             }
-
-//             async.eachSeries(json.data, function(obj, callback){
-//                //var createTime = obj.created_time;
-//                 var message = obj.message;
-//                 db.insertNode({
-//                 }, function (err, node) {
-//                   var id = node._id;
-//                   var color = _.random(0,1.0,true);
-//                   var createTime = 0;
-//                   var count = _.random(20,40);
-//                   if (err) {
-//                     return callback(err)
-//                   }else{
-//                         var item = {
-//                           user_id : '',
-//                           question_id : question_id,
-//                           node_id : id,
-//                           type : false,
-//                           message : message,
-//                           color: color,
-//                           count : count,
-//                           created : createTime
-//                         }
-
-//                         ItemModal.create(item, (err, docs) => {
-//                             if (err) {
-//                               callback(err);
-//                             } else {
-//                               var sql_child = "MATCH (s),(m) WHERE ID(s) = "+question_id+" AND ID(m) = "+id+" CREATE (s)-[r:Answer]->(m) return s,m,r"
-//                               // var sql_child = "MATCH (a { ID: '"++"' }), (b { ID: '"+id+"' }) CREATE (a)-[:Answer]->(b)";
-//                               console.log(sql_child);
-//                                   db.cypherQuery(sql_child, function (err, result) {
-//                                         if (err) {
-//                                                callback(err);
-//                                         }else{
-//                                             // res.send(result);
-//                                              callback(null);
-//                                         }
-//                                         // json.name = result.data.name
-//                                         // console.log(result)
-
-//                                   })
-//                             }
-//                           })
-//                   }
-//                 });
-//             },function done(err) {
-//                 if(err){
-//                   res.send(err);
-//                 }else{
-//                   res.send({});
-//                 }
-//             });
-//             // console.log('error:', error) // Print the error if one occurred
-//             // console.log('statusCode:', response && response.statusCode) // Print the response status code if a response was received
-//             // // console.log('body:', body) // Print the HTML for the Google homepage.
-//             // res.send(body);
-//         }
-//     )
-// });
 
 router.get('/test11', function(req, res, next){
     var question_id = req.query.q_id  == null ? parent_node_id : req.query.q_id;
@@ -249,43 +152,6 @@ router.get('/test11', function(req, res, next){
   })
 })
 
-
-// router.get('/test2', function(req, res, next){
-//   var sql_root = 'Match(n:Admin) return n';
-//   var sql_child = 'Match(n:Children) return n';
-//   var json = {
-//       "nodes": [{id:"22",name:"Like",color:[1,1,2,3,4,5],size:20},{id:23,name:"Angry",color:[1,5,5,5,1,1],size:25}],
-//       "relationship": [{"id_1":"22","id_2":"23"}]
-//   };
-
-//     db.cypherQuery(sql_root, function (err, result) {
-//         if (err) {
-//             res.status(404).send(result);
-//         }else{
-//             // res.send(result);
-//             res.json(json);
-//         }
-//         // json.name = result.data.name
-//         // console.log(result)
-
-//   })
-// })
-
-// router.get('/test3', function(req, res, next){
-//   var sql_root = 'Match(n:Admin) return n'
-//   var sql_child = 'Match(n:Children) return n'
-//   var json = {}
-//   db.insertNode({
-// 	  name: 'Ghuffran',
-// 	  company: 'Modulus',
-// 	  age: 11
-//   }, function (err, node) {
-//   if (err) {
-//     return res.status(404).send(err);
-//   }
-//  	res.send(node._id);
-//   });
-// })
 
 //formal function
 
