@@ -364,6 +364,9 @@ router.get('/live', function (req, res, next) {
         }
     )
 });
+router.get('/change', function(req,res,next){
+
+});
 
 router.get('/getdata', function(req, res, next){
 
@@ -422,9 +425,9 @@ router.get('/getdata', function(req, res, next){
                  
                   for(var i = 0; i < result.length; i++){
                     if(req.query.times != null &&  result[i]["created"] != req.query.times ){
-                    continue;
-                    }
-                    var id = result[i]["node_id"];
+                      
+                    }else{
+                      var id = result[i]["node_id"];
                     var name = result[i]["message"];
                      var color = new Array();
                       color.push(0);
@@ -451,6 +454,9 @@ router.get('/getdata', function(req, res, next){
 
                      node.push(tmp);
                      relationship.push(relation);
+
+                    }
+                   
                   }
                   result_data["nodes"] = node;
                   result_data["relationship"] = relationship;
