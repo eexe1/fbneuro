@@ -7,11 +7,8 @@ var _ = require('lodash');
 var async  =require("async")
 var db = new neo4j(
   'http://fb-hackathon:b.rFQqK9s1nX47.wpq2kglzGgEvDQpd@hobby-cjemgdgfojekgbkegdhoogpl.dbs.graphenedb.com:24789'
-)
+);
 
-/*
-
-*/
 var Schema = mongoose.Schema
 var Item = new Schema({
   user_id: {
@@ -73,7 +70,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/test1', function (req, res, next) {
     request(
-        'https://graph.facebook.com/v2.9/515904358769189/comments?limits=100&access_token=EAACEdEose0cBAK6z7whxhVZCnqYwz1kKRdn4TnjmqEenZCuDkZCuQPTqkeHAyhsFUpMZAGPOuzL7odfu7myOkVs0ZBuSjTnf75Rcfo0T3scF9MNjm2izpZBUtb7ImQfOGfnm2ZBiVDNozgO7RTFEtGfAMFHxhBovI0iZCngqaGJFE5pA38bE2vzvHfMdoPNOY3QZD',
+        'https://graph.facebook.com/v2.9/515904358769189/comments?limits=100&access_token=EAACEdEose0cBAOfD8Hx6SlfMQZCWAFxoS2LIKg17LcAeejGEgODRsPy0KGlkg9AXcYDCbsKMrs28QRlQUBdF9NQsYiNHhLuTGkvh7h5Pf1dQdfWFe6H4R4eUVEwijpuJzFGDDkDqUqtt8iC1PNbLnmzExEey5qDHZCgGpiAibaYV5Gm98u8bFp9UmPWsAZD',
         function (error, response, body) {
             if(error){
               return res.send("error");
@@ -206,7 +203,7 @@ router.get('/test11', function(req, res, next){
                      relationship.push(relation);
                   }
                   result_data["nodes"] = node;
-                  result_data["realtionship"] = relationship;
+                  result_data["relationship"] = relationship;
                  res.status(200).send(result_data);
                 }
               })
@@ -223,9 +220,12 @@ router.get('/test11', function(req, res, next){
 
 
 router.get('/test2', function(req, res, next){
-    var sql_root = 'Match(n:Admin) return n';
-    var sql_child = 'Match(n:Children) return n';
-    var json = {"label":"test", "color":"#00A0B0", "size":10};
+  var sql_root = 'Match(n:Admin) return n';
+  var sql_child = 'Match(n:Children) return n';
+  var json = {
+      "nodes": [{id:"22",name:"Like",color:[1,1,2,3,4,5],size:20},{id:23,name:"Angry",color:[1,5,5,5,1,1],size:25}],
+      "relationship": [{"id_1":"22","id_2":"23"}]
+  };
 
     db.cypherQuery(sql_root, function (err, result) {
         if (err) {

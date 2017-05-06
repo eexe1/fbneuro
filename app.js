@@ -9,6 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 // var auth = require()
 var comment = require('./routes/comment');
+var threed = require('./routes/threed');
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/comment',comment);
+app.use('/3d', threed);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
