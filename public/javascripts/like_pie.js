@@ -93,4 +93,4 @@ function updatePie(){
 updatePie();
 setInterval(function() {
     updatePie();
-}, 5000); //5 seconds
+}, 2000); //5 seconds

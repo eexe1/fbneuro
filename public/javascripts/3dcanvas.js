@@ -206,7 +206,7 @@ function getLive() {
         // console.log(json);
         var nodes = json.nodes;
         var relationships = json.relationship;
-        console.log(json);
+        // console.log(json);
         for (var i = 0; i < nodes.length; i++) {
             var node_color = calcColor(nodes[i].color);
             // console.log(node_color);

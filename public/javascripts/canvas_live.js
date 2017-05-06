@@ -18,13 +18,9 @@ jQuery(function(){
 });
 
 function calcColor(colors) {
-    var total = 0;
-    for (j in colors) {
-        total += Number(j);
-    }
-    var colorMixedR = colors[0] + colors[1];
-    var colorMixedG = colors[2] + colors[3];
-    var colorMixedB = colors[4] + colors[5];
+    var colorMixedR = colors[0];
+    var colorMixedG = colors[1];
+    var colorMixedB = colors[2];
     return "rgb(" + parseInt(colorMixedR) + "," + parseInt(colorMixedG) + "," + parseInt(colorMixedB) + ")";
 }
 
@@ -49,12 +45,14 @@ function getLive() {
         var nodes = json.nodes;
         var relationships = json.relationship;
         // console.log(json);
+        var colorsArray = [["55", "155","166"],["71", "147","156"],["87", "139","146"],["103", "131","136"],["119", "123","126"],
+            ["135", "107","116"],["151", "107","106"],["167", "99","96"],["183", "91","86"],["199", "83","76"]];
         for (var i = 0; i < nodes.length; i++) {
             if(nodes[i] === null){
                 continue;
             }
             console.log(nodes[i]);
-            var node_color = calcColor(nodes[i].color);
+            var node_color = calcColor(colorsArray[i%10]);
             var node = graph.newNode({
                 label: nodes[i].name,
                 id: nodes[i].id,
