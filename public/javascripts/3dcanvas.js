@@ -114,7 +114,7 @@ function init() {
         }
     });
 
-    for (var i = 0; i < 1000; i++) {
+    for (var i = 0; i < 3000; i++) {
         particle = new THREE.Sprite(material);
         particle.position.x = Math.random() * 2 - 1;
         particle.position.y = Math.random() * 2 - 1;
