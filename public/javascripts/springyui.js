@@ -336,6 +336,9 @@ jQuery.fn.springy = function(params) {
 				ctx.font = (node.data.font !== undefined) ? node.data.font : nodeFont;
 				ctx.fillStyle = "#000000";
 				var text = (node.data.label !== undefined) ? node.data.label : node.id;
+				if(text.length > 5){
+					text = text.substr(0,6);
+				}
 				ctx.fillText(text, s.x - contentWidth/2, s.y - contentHeight/2);
 			} else {
 				// Currently we just ignore any labels if the image object is set. One might want to extend this logic to allow for both, or other composite nodes.

@@ -46,7 +46,7 @@ jQuery(function(){
         graph: graph,
         nodeSelected: function(node){
             console.log('Node selected: ' + JSON.stringify(node.data));
-            $("#nodetext").html(node.data);
+            $("#nodetext").html("Content:" + node.data.label);
         }
     });
 });
@@ -68,30 +68,45 @@ function calcColor(colors) {
 
 var nodesGlobal = {};
 
-$.get( "comment/test11", function( data ) {
-    if(data === undefined){
-        alert("Error");
-        return;
-    }
-    console.log(data);
-    var json = JSON.parse(data);
-    // console.log(json);
-    var nodes = json.nodes;
-    var relationships = json.relationship;
-    console.log(json);
-    for (var i = 0; i < nodes.length; i++) {
-        var node_color = calcColor(nodes[i].color);
-        var node = graph.newNode({
-            label: nodes[i].name,
-            id: nodes[i].id,
-            size: nodes[i].size,
-            color: node_color});
-        // console.log(nodes[i]);
 
-        nodesGlobal[nodes[i].id] = node;
-    }
-    for (var j = 0; j < relationships.length; j++) {
-        var rel =  relationships[j];
-        graph.newEdge(nodesGlobal[rel.id_1], nodesGlobal[rel.id_2], {color: '#EB6841'});
-    }
-});
+function getLive() {
+    $.get( "comment/live", function( data ) {
+        if(data === undefined){
+            alert("Error");
+            return;
+        }
+        for (var property in nodesGlobal) {
+            if (nodesGlobal.hasOwnProperty(property)) {
+                graph.removeNode(nodesGlobal[property]);
+            }
+        }
+        nodesGlobal = {};
+        // console.log(data);
+        var json = JSON.parse(data);
+        // console.log(json);
+        var nodes = json.nodes;
+        var relationships = json.relationship;
+        // console.log(json);
+        for (var i = 0; i < nodes.length; i++) {
+            var node_color = calcColor(nodes[i].color);
+            var node = graph.newNode({
+                label: nodes[i].name,
+                id: nodes[i].id,
+                size: nodes[i].size,
+                color: node_color});
+            // console.log(nodes[i]);
+
+            nodesGlobal[nodes[i].id] = node;
+        }
+        for (var j = 0; j < relationships.length; j++) {
+            var rel =  relationships[j];
+            graph.newEdge(nodesGlobal[rel.id_1], nodesGlobal[rel.id_2], {color: '#EB6841'});
+        }
+    });
+}
+getLive();
+setInterval(function() {
+    getLive();
+}, 5000); //5 seconds
+
+

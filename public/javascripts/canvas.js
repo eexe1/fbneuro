@@ -27,7 +27,7 @@ function calcColor(colors) {
 
 var nodesGlobal = {};
 
-$.get( "comment/test11", function( data ) {
+$.get( "comment/getdata", function( data ) {
     if(data === undefined){
         alert("Error");
         return;
