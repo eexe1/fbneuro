@@ -8,10 +8,9 @@ function calcColor(colors) {
     for (j in colors) {
         total += Number(j);
     }
-    var colorPercentage = [colors[0] / total, colors[1] / total, colors[2] / total, colors[3] / total, colors[4] / total, colors[5] / total];
-    var colorMixedR = (colorPercentage[0] + colorPercentage[1]) * 255;
-    var colorMixedG = (colorPercentage[2] + colorPercentage[3]) * 255;
-    var colorMixedB = (colorPercentage[4] + colorPercentage[5]) * 255;
+    var colorMixedR = colors[1];
+    var colorMixedG = colors[3];
+    var colorMixedB = colors[5];
     return "rgb(" + parseInt(colorMixedR) + "," + parseInt(colorMixedG) + "," + parseInt(colorMixedB) + ")";
 }
 // var nodesGlobal = {};
@@ -55,7 +54,7 @@ function textSprite(text, _color, params) {
     var font = "Helvetica",
         size = 10,
         color = _color;
-
+    console.log(_color);
     font = "bold " + size + "px " + font;
 
     var canvas = document.createElement('canvas');
@@ -84,9 +83,9 @@ function textSprite(text, _color, params) {
             side: THREE.DoubleSide
         }));
 
-    console.log(canvas.width + 'x' + canvas.height);
-    console.log(texture);
-    console.log(mesh);
+    // console.log(canvas.width + 'x' + canvas.height);
+    // console.log(texture);
+    // console.log(mesh);
 
     return mesh;
 }
@@ -107,7 +106,7 @@ function init() {
     // particles
     var PI2 = Math.PI * 2;
     var material = new THREE.SpriteCanvasMaterial({
-        color: 0xffffff,
+        color: 0xc8c8c8,
         program: function (context) {
             context.beginPath();
             context.arc(0, 0, 0.5, 0, PI2, true);
@@ -135,7 +134,7 @@ function init() {
         var vertex2 = vertex.clone();
         vertex2.multiplyScalar(Math.random() * 0.3 + 1);
         geometry.vertices.push(vertex2);
-        var line = new THREE.Line(geometry, new THREE.LineBasicMaterial({color: 0xffffff, opacity: Math.random()}));
+        var line = new THREE.Line(geometry, new THREE.LineBasicMaterial({color: 0x360014, opacity: Math.random()}));
         scene.add(line);
     }
 }
@@ -191,7 +190,7 @@ function getLive() {
     if (index > 365) {
         return;
     }
-    $.get("comment/getdata?time=" + index, function (data) {
+    $.get("comment/getdata?times=" + index, function (data) {
         if (data === undefined) {
             alert("Error");
             return;
@@ -210,7 +209,7 @@ function getLive() {
         console.log(json);
         for (var i = 0; i < nodes.length; i++) {
             var node_color = calcColor(nodes[i].color);
-            console.log(node_color);
+            // console.log(node_color);
             if(i == 0){
                 nodesGlobal[nodes[i].id] = text;
                 continue;
