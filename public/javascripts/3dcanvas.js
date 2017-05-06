@@ -114,17 +114,7 @@ function init() {
             context.fill();
         }
     });
-    for (var i = 0; i < 1000; i++) {
-        // particle = new THREE.Sprite( material );
-        text = textSprite("LIKE", "#00FF00", {});
-        text.position.x = Math.random() * 2 - 1;
-        text.position.y = Math.random() * 2 - 1;
-        text.position.z = Math.random() * 2 - 1;
-        text.position.normalize();
-        text.position.multiplyScalar(Math.random() * 10 + 450);
-        text.scale.multiplyScalar(2);
-        scene.add(text);
-    }
+
     for (var i = 0; i < 1000; i++) {
         particle = new THREE.Sprite(material);
         particle.position.x = Math.random() * 2 - 1;
@@ -149,10 +139,10 @@ function init() {
         scene.add(line);
     }
 }
-    // document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-    // document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-    // document.addEventListener( 'touchmove', onDocumentTouchMove, false );
-    //
+// document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+// document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+// document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+//
 //     window.addEventListener( 'resize', onWindowResize, false );
 // }
 // function onWindowResize() {
@@ -183,12 +173,60 @@ function init() {
 // }
 //
 function animate() {
-    requestAnimationFrame( animate );
+    requestAnimationFrame(animate);
     render();
 }
 function render() {
     // camera.position.x += ( mouseX - camera.position.x ) * .05;
     // camera.position.y += ( - mouseY + 200 - camera.position.y ) * .05;
-    camera.lookAt( new THREE.Vector3(0,0,0) );
-    renderer.render( scene, camera );
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    renderer.render(scene, camera);
 }
+
+
+var nodesGlobal = {};
+var index = 2;
+function getLive() {
+    if (index > 109) {
+        return;
+    }
+    $.get("comment/getdata?time=" + index, function (data) {
+        if (data === undefined) {
+            alert("Error");
+            return;
+        }
+        for (var property in nodesGlobal) {
+            if (nodesGlobal.hasOwnProperty(property)) {
+                scene.remove(nodesGlobal[property]);
+            }
+        }
+        nodesGlobal = {};
+        // console.log(data);
+        var json = JSON.parse(data);
+        // console.log(json);
+        var nodes = json.nodes;
+        var relationships = json.relationship;
+        console.log(json);
+        for (var i = 0; i < nodes.length; i++) {
+            var node_color = calcColor(nodes[i].color);
+
+            var text = textSprite(nodes[i].name, node_color, {});
+            text.position.x = Math.random() * 2 - 1;
+            text.position.y = Math.random() * 2 - 1;
+            text.position.z = Math.random() * 2 - 1;
+            text.position.normalize();
+            text.position.multiplyScalar(Math.random() * 10 + 450);
+            text.scale.multiplyScalar(2);
+            scene.add(text);
+
+            nodesGlobal[nodes[i].id] = text;
+        }
+
+
+        index++;
+    });
+}
+getLive();
+setInterval(function () {
+    getLive();
+}, 5000);

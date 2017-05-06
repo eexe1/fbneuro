@@ -59,10 +59,9 @@ function calcColor(colors) {
     for (j in colors) {
         total += Number(j);
     }
-    var colorPercentage = [colors[0] / total, colors[1] / total, colors[2] / total, colors[3] / total, colors[4] / total, colors[5] / total];
-    var colorMixedR = (colorPercentage[0] + colorPercentage[1]) * 255;
-    var colorMixedG = (colorPercentage[2] + colorPercentage[3]) * 255;
-    var colorMixedB = (colorPercentage[4] + colorPercentage[5]) * 255;
+    var colorMixedR = colors[0] + colors[1];
+    var colorMixedG = colors[2] + colors[3];
+    var colorMixedB = colors[4] + colors[5];
     return "rgb(" + parseInt(colorMixedR) + "," + parseInt(colorMixedG) + "," + parseInt(colorMixedB) + ")";
 }
 
@@ -77,7 +76,7 @@ function getLive() {
         }
         for (var property in nodesGlobal) {
             if (nodesGlobal.hasOwnProperty(property)) {
-                graph.removeNode(nodesGlobal[property]);
+                graph.removeNovde(nodesGlobal[property]);
             }
         }
         nodesGlobal = {};
