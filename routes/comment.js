@@ -368,11 +368,12 @@ router.get('/live', function (req, res, next) {
             parentnode = new Node("-1", "Sample centre", color, 40);
             nodes[0] = parentnode;
             //nodes.push(node);
-            function Node(id, name, color, size) {
+            function Node(id, name, color, size, from) {
                 this.id = id;
                 this.name = name;
                 this.color = color;
                 this.size = size;
+                this.from = from;
             }
 
             var i;
@@ -388,7 +389,7 @@ router.get('/live', function (req, res, next) {
                 color.push(0);
                 color.push(_.random(0, 255));
                 if (!msgMap.containsKey(message)) {
-                    var node = new Node(i+1, message, color, 20);
+                    var node = new Node(i+1, message, color, 20, json.data[i].from.name);
                     nodes[i+1] = node;
                     msgMap.put(message, i+1);
                 } else {
@@ -399,7 +400,7 @@ router.get('/live', function (req, res, next) {
                     var size = nodes[id].size;
                     msgMap.remove(message);
                     msgMap.put(message, i+1);
-                    nodes[id] = new Node(id, message, color, parseInt(size) + 5);
+                    nodes[id] = new Node(id, message, color, parseInt(size) + 5, json.data[i+1].from.name);
 
                 }
             }

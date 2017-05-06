@@ -106,7 +106,7 @@ function init() {
     // particles
     var PI2 = Math.PI * 2;
     var material = new THREE.SpriteCanvasMaterial({
-        color: 0xc8c8c8,
+        color: 0xE6E6E6,
         program: function (context) {
             context.beginPath();
             context.arc(0, 0, 0.5, 0, PI2, true);
@@ -134,7 +134,7 @@ function init() {
         var vertex2 = vertex.clone();
         vertex2.multiplyScalar(Math.random() * 0.3 + 1);
         geometry.vertices.push(vertex2);
-        var line = new THREE.Line(geometry, new THREE.LineBasicMaterial({color: 0x360014, opacity: Math.random()}));
+        var line = new THREE.Line(geometry, new THREE.LineBasicMaterial({color: 0xE6E6E6, opacity: Math.random()}));
         scene.add(line);
     }
 }
@@ -179,7 +179,7 @@ function render() {
     // camera.position.x += ( mouseX - camera.position.x ) * .05;
     // camera.position.y += ( - mouseY + 200 - camera.position.y ) * .05;
     camera.lookAt(new THREE.Vector3(0, 0, 0));
-    // renderer.setClearColor( 0xEFEFEF );
+    renderer.setClearColor( 0x303030 );
     renderer.render(scene, camera);
 }
 

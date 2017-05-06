@@ -8,7 +8,11 @@ jQuery(function(){
         graph: graph,
         nodeSelected: function(node){
             console.log('Node selected: ' + JSON.stringify(node.data));
-            $("#nodetext").html("Content:" + node.data.label);
+            $("#nodetext").html("Message:" + node.data.label);
+            if(node.data.from !== undefined)
+                $("#nodefromtext").html("From:" + node.data.from);
+            else
+                $("#nodefromtext").html("");
         }
     });
 });
@@ -49,13 +53,14 @@ function getLive() {
             if(nodes[i] === null){
                 continue;
             }
-            // console.log(nodes[i]);
+            console.log(nodes[i]);
             var node_color = calcColor(nodes[i].color);
             var node = graph.newNode({
                 label: nodes[i].name,
                 id: nodes[i].id,
                 size: nodes[i].size,
-                color: node_color});
+                color: node_color,
+                from: nodes[i].from});
             // console.log(nodes[i]);
 
             nodesGlobal[nodes[i].id] = node;
