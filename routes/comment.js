@@ -428,11 +428,11 @@ router.get('/getdata', function(req, res, next){
                     var name = result[i]["message"];
                      var color = new Array();
                       color.push(0);
-                      color.push(255/100.0*result[i]["color"])
+                      color.push(255*result[i]["color"])
                       color.push(0);
                       color.push(0);
                       color.push(0);
-                      color.push(255 - 255/100.0*result[i]["color"])
+                      color.push(255 - 255*result[i]["color"])
                     
                     var size  = result[i]["count"];
                     
