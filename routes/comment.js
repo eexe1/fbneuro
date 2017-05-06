@@ -546,50 +546,51 @@ router.get('/getdata', function (req, res, next) {
                                 var color = new Array();
                                 var r = 214, g = 90, b = 103;
                                 if (result[i]["color"] >= 0 && result[i]["color"] <= 0.1) {
-
+                                    r = 55;
+                                    g = 155;
+                                    b = 166;
                                 }
                                 else if (result[i]["color"] > 0.1 && result[i]["color"] <= 0.2) {
-                                    r = 214;
-                                    g = 90;
-                                    b = 103;
+                                    r = 71;
+                                    g = 147;
+                                    b = 156;
                                 } else if (result[i]["color"] > 0.2 && result[i]["color"] <= 0.3) {
-                                    r = 216;
-                                    g = 98;
-                                    b = 103;
-
+                                   r = 87;
+                                    g = 139;
+                                    b = 146;
                                 } else if (result[i]["color"] > 0.3 && result[i]["color"] <= 0.4) {
-                                    r = 218;
-                                    g = 106;
-                                    b = 103;
+                                   r = 103;
+                                    g = 131;
+                                    b = 136;
+
 
                                 } else if (result[i]["color"] > 0.4 && result[i]["color"] <= 0.5) {
-                                    r = 220;
-                                    g = 114;
-                                    b = 103;
+                                r = 119;
+                                    g = 123;
+                                    b = 126;
 
                                 } else if (result[i]["color"] > 0.5 && result[i]["color"] <= 0.6) {
-                                    r = 222;
-                                    g = 122;
-                                    b = 103;
-
+                                   r = 135;
+                                    g = 115;
+                                    b = 116;
                                 } else if (result[i]["color"] > 0.6 && result[i]["color"] <= 0.7) {
-                                    r = 224;
-                                    g = 130;
-                                    b = 103;
+                                   r = 151;
+                                    g = 107;
+                                    b = 106;
 
                                 } else if (result[i]["color"] > 0.7 && result[i]["color"] <= 0.8) {
-                                    r = 226;
-                                    g = 138;
-                                    b = 103;
+                                      r = 167;
+                                    g = 99;
+                                    b = 96;
 
                                 } else if (result[i]["color"] >= 0.8 && result[i]["color"] <= 0.9) {
-                                    r = 230;
-                                    g = 154;
-                                    b = 103;
+                                     r = 183;
+                                    g = 91;
+                                    b = 86;
                                 } else if (result[i]["color"] >= 0.9) {
-                                    r = 232;
-                                    g = 162;
-                                    b = 103;
+                                    r = 215;
+                                    g = 75;
+                                    b = 66;
 
                                 }
                                 color.push(0);
@@ -679,53 +680,54 @@ router.get('/getdata1', function (req, res, next) {
                                 var id = i;
                                 var name = result[i]["message"];
                                 var color = new Array();
-                                var r = 214, g = 90, b = 103;
+                                var r = 55, g = 155, b = 166;
                                 result[i]["color"]  = result[i]["color"] *2;
-                                if (result[i]["color"] >= 0 && result[i]["color"] <= 0.1) {
-
+                               if (result[i]["color"] >= 0 && result[i]["color"] <= 0.1) {
+                                    r = 55;
+                                    g = 155;
+                                    b = 166;
                                 }
                                 else if (result[i]["color"] > 0.1 && result[i]["color"] <= 0.2) {
-                                    r = 214;
-                                    g = 90;
-                                    b = 103;
+                                    r = 71;
+                                    g = 147;
+                                    b = 156;
                                 } else if (result[i]["color"] > 0.2 && result[i]["color"] <= 0.3) {
-                                    r = 216;
-                                    g = 98;
-                                    b = 103;
-
+                                   r = 87;
+                                    g = 139;
+                                    b = 146;
                                 } else if (result[i]["color"] > 0.3 && result[i]["color"] <= 0.4) {
-                                    r = 218;
-                                    g = 106;
-                                    b = 103;
+                                   r = 103;
+                                    g = 131;
+                                    b = 136;
+
 
                                 } else if (result[i]["color"] > 0.4 && result[i]["color"] <= 0.5) {
-                                    r = 220;
-                                    g = 114;
-                                    b = 103;
+                                r = 119;
+                                    g = 123;
+                                    b = 126;
 
                                 } else if (result[i]["color"] > 0.5 && result[i]["color"] <= 0.6) {
-                                    r = 222;
-                                    g = 122;
-                                    b = 103;
-
+                                   r = 135;
+                                    g = 115;
+                                    b = 116;
                                 } else if (result[i]["color"] > 0.6 && result[i]["color"] <= 0.7) {
-                                    r = 224;
-                                    g = 130;
-                                    b = 103;
+                                   r = 151;
+                                    g = 107;
+                                    b = 106;
 
                                 } else if (result[i]["color"] > 0.7 && result[i]["color"] <= 0.8) {
-                                    r = 226;
-                                    g = 138;
-                                    b = 103;
+                                      r = 167;
+                                    g = 99;
+                                    b = 96;
 
                                 } else if (result[i]["color"] >= 0.8 && result[i]["color"] <= 0.9) {
-                                    r = 230;
-                                    g = 154;
-                                    b = 103;
+                                     r = 183;
+                                    g = 91;
+                                    b = 86;
                                 } else if (result[i]["color"] >= 0.9) {
-                                    r = 232;
-                                    g = 162;
-                                    b = 103;
+                                    r = 215;
+                                    g = 75;
+                                    b = 66;
 
                                 }
                                 color.push(0);
