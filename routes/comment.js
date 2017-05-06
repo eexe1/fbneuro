@@ -384,13 +384,13 @@ router.get('/generate', function (req, res, next) {
     )
 });
 
-<<<<<<<
-router.get('/test10', function (req, res, next) {
+router.get('/live', function (req, res, next) {
     request(
-        'https://graph.facebook.com/v2.9/516006922092266/comments?access_token=EAACEdEose0cBAKcZCSZBNpLrKF0QSZAHkNHaYIZCpAhYbJoMAr1BHPr2GVYYmzbZAxiHhZBNP5TrZBt15AJSHpsDXgW3QYk5BZC7fJ38quDLYf8O4sX4ZAikV9O5RnFORnJpr6O6awPvBOmw8cYyBFsb4AUMlEkVXemOnwCDVQ3SAXFWUESSI0RJJDYagJHlaEb8ZD',
+        'https://graph.facebook.com/v2.9/516006922092266/comments?access_token='+ access_token,
         function (error, response, body) {
             var json = JSON.parse(body);
             console.log(json.data);
+            var result_data = {};
             var color = new Array();
             color.push(_.random(0,10));
             color.push(_.random(0,10));
@@ -507,32 +507,21 @@ router.get('/test10', function (req, res, next) {
 
         var relationship = new Array();
         for(i=1;i<nodes.length;i++) {
-            relationship.push(new Relation("parent", nodes[i].id));
+            relationship.push(new Relation("-1", nodes[i].id));
         }
 
-        var jsonNode = JSON.stringify(nodes);
-        var jsonRelation = JSON.stringify(relationship);
-
-        function finalJson(nodes, relations) {
-            this.nodes = nodes;
-            this.relationship = relations;
-        }
-
-            console.log('error:', error) // Print the error if one occurred
-            console.log('statusCode:', response && response.statusCode) // Print the response status code if a response was received
+            console.log('error:', error); // Print the error if one occurred
+            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
             // console.log('body:', body) // Print the HTML for the Google homepage.
-            res.send(JSON.stringify(new finalJson(jsonNode, jsonRelation)));
+            result_data["nodes"] = nodes;
+            result_data["relationship"] = relationship;
+            res.send(result_data);
         }
     )
 });
 
-router.get('/test11', function(req, res, next){
-=======
-
-
-
 router.get('/getdata', function(req, res, next){
->>>>>>>
+
     var question_id = req.query.q_id  == null ? parent_node_id : req.query.q_id;
     var sql_root = 'MATCH (s) WHERE ID(s) = '+question_id+' MATCH (s)-[:Answer]->(m) return m';
     console.log(sql_root);
