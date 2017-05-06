@@ -430,12 +430,60 @@ router.get('/getdata', function(req, res, next){
                       var id = result[i]["node_id"];
                     var name = result[i]["message"];
                      var color = new Array();
+                     var r=255,g=255,b=255;
+                      if(result[i]["color"]>=0 && result[i]["color"] <=0.1){
+
+                      }
+                      else if(result[i]["color"]>0.1 && result[i]["color"] <=0.2){
+                          r = 214;
+                          g = 90;
+                          b = 103;
+                      }else if(result[i]["color"]>0.2 && result[i]["color"] <=0.3){
+                          r = 216;
+                          g = 98;
+                          b = 103;
+
+                      }else if(result[i]["color"]>0.3 && result[i]["color"] <=0.4){
+                          r = 218;
+                          g = 106;
+                          b = 103;
+
+                      }else if(result[i]["color"]>0.4 && result[i]["color"] <=0.5){
+                          r = 220;
+                          g = 114;
+                          b = 103;
+
+                      }else if(result[i]["color"]>0.5 && result[i]["color"] <=0.6){
+                          r = 222;
+                          g = 122;
+                          b = 103;
+
+                      }else if(result[i]["color"]>0.6 && result[i]["color"] <=0.6){
+                          r = 224;
+                          g = 130;
+                          b = 103;
+
+                      }else if(result[i]["color"]>0.7 && result[i]["color"] <=0.7){
+                          r = 226;
+                          g = 138;
+                          b = 103;
+
+                      }else if(result[i]["color"]>=0.8 && result[i]["color"] <=0.8){
+                          r = 230;
+                          g = 154;
+                          b = 103;
+                      }else if(result[i]["color"]>=0.9 && result[i]["color"] <=1){
+                          r = 232;
+                          g = 162;
+                          b = 103;
+                      
+                      }
                       color.push(0);
-                      color.push(255*result[i]["color"])
+                      color.push(r);
                       color.push(0);
+                      color.push(g);
                       color.push(0);
-                      color.push(0);
-                      color.push(255 - 255*result[i]["color"])
+                      color.push(b);
                     
                     var size  = result[i]["count"];
                     
