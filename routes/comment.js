@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
+var neo4j = require('node-neo4j')
+var db = new neo4j(
+  'http://fb-hackathon:b.rFQqK9s1nX47.wpq2kglzGgEvDQpd@hobby-cjemgdgfojekgbkegdhoogpl.dbs.graphenedb.com:24789'
+)
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -18,4 +22,20 @@ router.get('/test1', function (req, res, next) {
   )
 })
 
+router.get('/test2', function(req, res, next){
+  var sql_root = 'Match(n:Admin) return n'
+  var sql_child = 'Match(n:Children) return n'
+  var json = {}
+
+  db.cypherQuery(sql_root, function (err, result) {
+    if (err) {
+       res.status(404).send(result);
+    }else{
+       res.send(result);
+    }
+    // json.name = result.data.name
+    // console.log(result)
+
+  })
+})
 module.exports = router;
