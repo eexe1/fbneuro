@@ -596,8 +596,10 @@ router.get('/getdata', function(req, res, next){
                     color.push(_.random(0,10));
                     color.push(_.random(0,10));
                     color.push(_.random(0,10));
-                    var size  = _.random(20,40);
-                     var tmp = {
+                    
+                    var size  = result[i]["count"];
+                    
+                    var tmp = {
                        id : id,
                        name: name,
                        color : color,
