@@ -2,8 +2,8 @@
  * Created by XX on 2017/5/7.
  */
 
-var width = 500,
-    height = 500,
+var width = 400,
+    height = 400,
     radius = Math.min(width, height) / 2,
     innerRadius = 0.3 * radius;
 

@@ -325,7 +325,9 @@ jQuery.fn.springy = function(params) {
 			if (selected !== null && selected.node !== null && selected.node.id === node.id) {
 				ctx.fillStyle = "#00FFFF";
 			} else if (nearest !== null && nearest.node !== null && nearest.node.id === node.id) {
-				ctx.fillStyle = "#00FF00";
+				ctx.fillStyle = "#3377ff";
+                ctx.font = "25px Arial";
+                ctx.fillText(node.data.label,s.x-10,s.y-25);
 			} else {
 				ctx.fillStyle = color;
 			}
