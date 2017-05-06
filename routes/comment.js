@@ -174,14 +174,20 @@ router.get('/test11', function(req, res, next){
                 if(err){
                   res.status(404).send({});
                 }else{
-                  res.status(200).send(result);
+                 
                   var result_data = {};
-                  var node = {};
-                  var relationship = {};
+                  var node = new Array();
+                  var relationship = new Array();
                   for(var i = 0; i < result.length; i++){
                     var id = result[i]["node_id"];
                     var name = result[i]["message"];
-                    var color = [];
+                    var color = new Array();
+                    color.push(_.random(0,10));
+                    color.push(_.random(0,10));
+                    color.push(_.random(0,10));
+                    color.push(_.random(0,10));
+                    color.push(_.random(0,10));
+                    color.push(_.random(0,10));
                     var size  = _.random(20,40);
                      var tmp = {
                        id : id,
@@ -201,6 +207,7 @@ router.get('/test11', function(req, res, next){
                   }
                   result_data["nodes"] = node;
                   result_data["realtionship"] = relationship;
+                 res.status(200).send(result_data);
                 }
               })
               
