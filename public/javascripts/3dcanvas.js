@@ -54,7 +54,7 @@ function textSprite(text, _color, params) {
     var font = "Helvetica",
         size = 10,
         color = _color;
-    console.log(_color);
+    // console.log(_color);
     font = "bold " + size + "px " + font;
 
     var canvas = document.createElement('canvas');
