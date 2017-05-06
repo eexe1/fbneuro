@@ -7,11 +7,8 @@ var _ = require('lodash');
 var async  =require("async")
 var db = new neo4j(
   'http://fb-hackathon:b.rFQqK9s1nX47.wpq2kglzGgEvDQpd@hobby-cjemgdgfojekgbkegdhoogpl.dbs.graphenedb.com:24789'
-)
+);
 
-/*
-
-*/
 var Schema = mongoose.Schema
 var Item = new Schema({
   user_id: {

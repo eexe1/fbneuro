@@ -46,6 +46,7 @@ jQuery(function(){
         graph: graph,
         nodeSelected: function(node){
             console.log('Node selected: ' + JSON.stringify(node.data));
+            $("#nodetext").html(node.data);
         }
     });
 });
@@ -68,6 +69,10 @@ function calcColor(colors) {
 var nodesGlobal = {};
 
 $.get( "comment/test2", function( data ) {
+    if(data === undefined){
+        alert("Error");
+        return;
+    }
     var json = JSON.parse(data);
     // console.log(json);
     var nodes = json.nodes;
