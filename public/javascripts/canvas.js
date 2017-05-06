@@ -26,31 +26,48 @@ function calcColor(colors) {
 }
 
 var nodesGlobal = {};
-
-$.get( "comment/getdata", function( data ) {
-    if(data === undefined){
-        alert("Error");
+var index = 2;
+function getLive() {
+    if(index > 109){
         return;
     }
-    console.log(data);
-    var json = JSON.parse(data);
-    // console.log(json);
-    var nodes = json.nodes;
-    var relationships = json.relationship;
-    console.log(json);
-    for (var i = 0; i < nodes.length; i++) {
-        var node_color = calcColor(nodes[i].color);
-        var node = graph.newNode({
-            label: nodes[i].name,
-            id: nodes[i].id,
-            size: nodes[i].size,
-            color: node_color});
-        // console.log(nodes[i]);
+    $.get("comment/getdata?time=" + index, function (data) {
+        if (data === undefined) {
+            alert("Error");
+            return;
+        }
+        for (var property in nodesGlobal) {
+            if (nodesGlobal.hasOwnProperty(property)) {
+                graph.removeNode(nodesGlobal[property]);
+            }
+        }
+        nodesGlobal = {};
+        console.log(data);
+        var json = JSON.parse(data);
+        // console.log(json);
+        var nodes = json.nodes;
+        var relationships = json.relationship;
+        console.log(json);
+        for (var i = 0; i < nodes.length; i++) {
+            var node_color = calcColor(nodes[i].color);
+            var node = graph.newNode({
+                label: nodes[i].name,
+                id: nodes[i].id,
+                size: nodes[i].size,
+                color: node_color
+            });
+            // console.log(nodes[i]);
 
-        nodesGlobal[nodes[i].id] = node;
-    }
-    for (var j = 0; j < relationships.length; j++) {
-        var rel =  relationships[j];
-        graph.newEdge(nodesGlobal[rel.id_1], nodesGlobal[rel.id_2], {color: '#EB6841'});
-    }
-});
+            nodesGlobal[nodes[i].id] = node;
+        }
+        for (var j = 0; j < relationships.length; j++) {
+            var rel = relationships[j];
+            graph.newEdge(nodesGlobal[rel.id_1], nodesGlobal[rel.id_2], {color: '#EB6841'});
+        }
+        index ++;
+    });
+}
+getLive();
+setInterval(function() {
+    getLive();
+}, 1000);
