@@ -70,7 +70,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/test1', function (req, res, next) {
     request(
-        'https://graph.facebook.com/v2.9/515904358769189/comments?limits=100&access_token=EAACEdEose0cBAK6z7whxhVZCnqYwz1kKRdn4TnjmqEenZCuDkZCuQPTqkeHAyhsFUpMZAGPOuzL7odfu7myOkVs0ZBuSjTnf75Rcfo0T3scF9MNjm2izpZBUtb7ImQfOGfnm2ZBiVDNozgO7RTFEtGfAMFHxhBovI0iZCngqaGJFE5pA38bE2vzvHfMdoPNOY3QZD',
+        'https://graph.facebook.com/v2.9/515904358769189/comments?limits=100&access_token=EAACEdEose0cBAOfD8Hx6SlfMQZCWAFxoS2LIKg17LcAeejGEgODRsPy0KGlkg9AXcYDCbsKMrs28QRlQUBdF9NQsYiNHhLuTGkvh7h5Pf1dQdfWFe6H4R4eUVEwijpuJzFGDDkDqUqtt8iC1PNbLnmzExEey5qDHZCgGpiAibaYV5Gm98u8bFp9UmPWsAZD',
         function (error, response, body) {
             if(error){
               return res.send("error");
@@ -203,7 +203,7 @@ router.get('/test11', function(req, res, next){
                      relationship.push(relation);
                   }
                   result_data["nodes"] = node;
-                  result_data["realtionship"] = relationship;
+                  result_data["relationship"] = relationship;
                  res.status(200).send(result_data);
                 }
               })
