@@ -72,6 +72,33 @@ router.get('/test1', function (req, res, next) {
     )
 });
 
+router.get('/test10', function (req, res, next) {
+    request(
+        'https://graph.facebook.com/v2.9/516006922092266/comments/access_token=EAACEdEose0cBABZBcq2Ow3MFTGBupfydEYps0KILwsvZB6aOvelpZB1FVZBIQFDeW69fMZC7Qn2uysMfsPyoidxliS1Rt9nSVC8wY5tUz93UBcAnuua044gQ8PzbJNijnABAMkODf631msNzuTZC3gvPDDUCmwoJvtxJRGVcf0IGXtQV0Nm9d4a8laleB3fGwZD',
+        function (error, response, body) {
+            var json = JSON.parse(body);
+            console.log(json.data);
+            for(i=0;i<json.data.length;i++) {
+                var createTime = json.data[i].created_time;
+                var message = json.data[i].message;
+                console.log(createTime);
+                console.log(message);
+            }
+            var node = [];
+            function node(id,name,color,size) {
+                this.id = id;
+                this.name = name;
+                this.color = color;
+                this.size = size;
+            }
+            console.log('error:', error) // Print the error if one occurred
+            console.log('statusCode:', response && response.statusCode) // Print the response status code if a response was received
+            // console.log('body:', body) // Print the HTML for the Google homepage.
+            res.send(body);
+        }
+    )
+});
+
 router.get('/test2', function(req, res, next){
   var sql_root = 'Match(n:Admin) return n';
   var sql_child = 'Match(n:Children) return n';
