@@ -137,6 +137,10 @@ function init() {
         var line = new THREE.Line(geometry, new THREE.LineBasicMaterial({color: 0xE6E6E6, opacity: Math.random()}));
         scene.add(line);
     }
+    //light
+    // var light = new THREE.PointLight( 0xffffff, 100, 0 );
+    // light.position.set( 0, 0, 0 );
+    // scene.add( light );
 }
 // document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 // document.addEventListener( 'touchstart', onDocumentTouchStart, false );

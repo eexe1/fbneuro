@@ -348,7 +348,7 @@ router.get('/generate_by_doc', function (req, res, next) {
 
 router.get('/live', function (req, res, next) {
     request(
-        'https://graph.facebook.com/v2.9/516006922092266/comments?access_token=' + access_token,
+        'https://graph.facebook.com/v2.9/450834178588002/comments?access_token=' + access_token,
         function (error, response, body) {
             if(error){
                 return;
@@ -431,7 +431,7 @@ router.get('/live', function (req, res, next) {
 
 router.get('/like', function (req, res, next) {
     request(
-        'https://graph.facebook.com/v2.9/516006922092266/comments?fields=reactions&access_token=' + access_token,
+        'https://graph.facebook.com/v2.9/450834178588002/comments?fields=reactions&access_token=' + access_token,
         function (error, response, body) {
             var json = JSON.parse(body);
             // console.log(json.data);
