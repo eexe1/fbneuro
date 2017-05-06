@@ -15,7 +15,7 @@ var live = require('./routes/live');
 var app = express();
 
 var mongoose = require('mongoose')
-mongoose.connect("mongodb://localhost/fb", {})
+mongoose.connect("mongodb://54.164.123.38/fb", {})
 var db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', () => {
