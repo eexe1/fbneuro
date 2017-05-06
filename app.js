@@ -10,6 +10,7 @@ var users = require('./routes/users');
 // var auth = require()
 var comment = require('./routes/comment');
 var threed = require('./routes/threed');
+var live = require('./routes/live');
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/comment',comment);
 app.use('/3d', threed);
+app.use('/live', live);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

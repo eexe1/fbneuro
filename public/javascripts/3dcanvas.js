@@ -53,8 +53,8 @@ init();
 animate();
 function textSprite(text, params) {
     var font = "Helvetica",
-        size = 8,
-        color = "#676767";
+        size = 10,
+        color = "#427af4";
 
     font = "bold " + size + "px " + font;
 
