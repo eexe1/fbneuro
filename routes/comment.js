@@ -1,10 +1,52 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
-var neo4j = require('node-neo4j');
+var neo4j = require('node-neo4j')
+var mongoose = require('mongoose')
 var db = new neo4j(
-    'http://fb-hackathon:b.rFQqK9s1nX47.wpq2kglzGgEvDQpd@hobby-cjemgdgfojekgbkegdhoogpl.dbs.graphenedb.com:24789'
-);
+  'http://fb-hackathon:b.rFQqK9s1nX47.wpq2kglzGgEvDQpd@hobby-cjemgdgfojekgbkegdhoogpl.dbs.graphenedb.com:24789'
+)
+
+/*
+
+*/
+var Schema = mongoose.Schema
+var Item = new Schema({
+  user_id: {
+    type: String,
+ 	default: ''
+  },
+  question_id: {
+    type: String
+  },
+  type:{
+  	type: Boolean
+  }
+})
+
+var ItemModal = mongoose.model('item', Item);
+
+router.get('/item', function(req, res, next){
+  var item = {
+  	user_id : '',
+  	question_id : '123',
+  	type : true
+  }
+
+  ItemModal.create(item, (err, docs) => {
+      if (err) {
+			res.send({});
+      } else {
+        var result = {
+          id: docs._id
+        }
+        res.send({});
+      }
+    })
+});
+
+
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     res.send('respond with a resource');
@@ -45,6 +87,37 @@ router.get('/test2', function(req, res, next){
         // json.name = result.data.name
         // console.log(result)
 
-    })
-});
+  })
+})
+
+router.get('/test3', function(req, res, next){
+  var sql_root = 'Match(n:Admin) return n'
+  var sql_child = 'Match(n:Children) return n'
+  var json = {}
+  db.insertNode({
+	  name: 'Ghuffran',
+	  company: 'Modulus',
+	  age: 11
+  }, function (err, node) {
+  if (err) {
+    return res.status(404).send(err);
+  }
+ 	res.send(node._id);
+  });
+})
+
+
+// db.insertNode({
+//   name: 'Ghuffran',
+//   company: 'Modulus',
+//   age: ~~(Math.random() * 100)
+// }, function (err, node) {
+//   if (err) {
+//     return console.log(err);
+//   }
+
+//   // Output node data.
+//   console.log(node);
+// });
+
 module.exports = router;
