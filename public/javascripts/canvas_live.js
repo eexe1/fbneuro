@@ -76,7 +76,7 @@ function getLive() {
         }
         for (var property in nodesGlobal) {
             if (nodesGlobal.hasOwnProperty(property)) {
-                graph.removeNovde(nodesGlobal[property]);
+                graph.removeNode(nodesGlobal[property]);
             }
         }
         nodesGlobal = {};

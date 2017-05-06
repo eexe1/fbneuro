@@ -11,7 +11,7 @@ var db = new neo4j(
 );
 var parent_node_id = 735;
 var parent_question = "Live";
-var access_token = "EAACEdEose0cBAA4nIvD2VjSfAFkkGnXFNZCvbIaiBoRnkQZCYewWrpnrSplWo634HZAQwlEnS38flzZAhlX1FBHLWZBZAsJg6VZB7C2u6GKO8MMGeFwbnk98DN0TXuJFAlZCQfD3wEB2tFfRsfSxIhTP9sCOaEzqoVXntiT9eCk0nh9fIiVvQOgagVSyb5jaGZAwZD";
+var access_token = "EAACEdEose0cBAP81eobd6uzsAe1PXnxoOfP9YVC68fvZCiXswYNVGZArrjc3kB5Lx5A2rzbyJp5pDUAem3CkEu3VwkN6yDQ0ydFr7gZCCJj8rCQMJy20Xo7NfOcvUBCy1vqdFPM6TDP5wtvgZBjoXI74LlCsRpa5ZCOZBCcx62XtKMQ1JRXq74RnfWkk201TMZD";
 var Schema = mongoose.Schema
 var Item = new Schema({
     user_id: {
@@ -47,6 +47,69 @@ var Item = new Schema({
 
 var ItemModal = mongoose.model('item', Item);
 
+function HashMap() {
+    var length = 0;
+    var obj = new Object();
+
+    this.isEmpty = function () {
+        return length == 0;
+    };
+
+    this.containsKey = function (key) {
+        return (key in obj);
+    };
+
+    this.containsValue = function (value) {
+        for (var key in obj) {
+            if (obj[key] == value) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    this.put = function (key, value) {
+        if (!this.containsKey(key)) {
+            length++;
+        }
+        obj[key] = value;
+    };
+
+    this.get = function (key) {
+        return this.containsKey(key) ? obj[key] : null;
+    };
+
+    this.remove = function (key) {
+        if (this.containsKey(key) && (delete obj[key])) {
+            length--;
+        }
+    };
+
+    this.values = function () {
+        var _values = new Array();
+        for (var key in obj) {
+            _values.push(obj[key]);
+        }
+        return _values;
+    };
+
+    this.keySet = function () {
+        var _keys = new Array();
+        for (var key in obj) {
+            _keys.push(key);
+        }
+        return _keys;
+    };
+
+    this.size = function () {
+        return length;
+    };
+
+    this.clear = function () {
+        length = 0;
+        obj = new Object();
+    };
+}
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -84,7 +147,7 @@ router.get('/generate', function (req, res, next) {
                 return res.send("error");
             }
             var json = JSON.parse(body);
-            console.log(json.data);
+            // console.log(json.data);
             var question_id = req.query.q_id == null ? parent_node_id : req.query.q_id;
             if (json == null || json.data == null || json.data.length == 0) {
                 return res.send("no data");
@@ -225,6 +288,8 @@ router.get('/generate_by_doc', function (req, res, next) {
     )
 });
 
+
+
 router.get('/live', function (req, res, next) {
     request(
         'https://graph.facebook.com/v2.9/516006922092266/comments?access_token=' + access_token,
@@ -233,16 +298,17 @@ router.get('/live', function (req, res, next) {
             console.log(json.data);
             var result_data = {};
             var color = new Array();
-            color.push(_.random(0, 10));
-            color.push(_.random(0, 10));
-            color.push(_.random(0, 10));
-            color.push(_.random(0, 10));
-            color.push(_.random(0, 10));
-            color.push(_.random(0, 10));
+            color.push(0);
+            color.push(_.random(0, 255));
+            color.push(0);
+            color.push(_.random(0, 255));
+            color.push(0);
+            color.push(_.random(0, 255));
             var nodes = new Array();
-            var node;
-            node = new Node("-1", "Sample centre", color, 40);
-            nodes.push(node);
+            var parentnode;
+            parentnode = new Node("-1", "Sample centre", color, 40);
+            nodes[0] = parentnode;
+            //nodes.push(node);
             function Node(id, name, color, size) {
                 this.id = id;
                 this.name = name;
@@ -250,96 +316,35 @@ router.get('/live', function (req, res, next) {
                 this.size = size;
             }
 
-
-            function HashMap() {
-                var length = 0;
-                var obj = new Object();
-
-                this.isEmpty = function () {
-                    return length == 0;
-                };
-
-                this.containsKey = function (key) {
-                    return (key in obj);
-                };
-
-                this.containsValue = function (value) {
-                    for (var key in obj) {
-                        if (obj[key] == value) {
-                            return true;
-                        }
-                    }
-                    return false;
-                };
-
-                this.put = function (key, value) {
-                    if (!this.containsKey(key)) {
-                        length++;
-                    }
-                    obj[key] = value;
-                };
-
-                this.get = function (key) {
-                    return this.containsKey(key) ? obj[key] : null;
-                };
-
-                this.remove = function (key) {
-                    if (this.containsKey(key) && (delete obj[key])) {
-                        length--;
-                    }
-                };
-
-                this.values = function () {
-                    var _values = new Array();
-                    for (var key in obj) {
-                        _values.push(obj[key]);
-                    }
-                    return _values;
-                };
-
-                this.keySet = function () {
-                    var _keys = new Array();
-                    for (var key in obj) {
-                        _keys.push(key);
-                    }
-                    return _keys;
-                };
-
-                this.size = function () {
-                    return length;
-                };
-
-                this.clear = function () {
-                    length = 0;
-                    obj = new Object();
-                };
-            }
-
+            var i;
             var msgMap = new HashMap();
             for (i = 0; i < json.data.length; i++) {
-                var message = json.data[i].message;
-                console.log(message);
+                const message = json.data[i].message;
+                // console.log(message);
                 var color = new Array();
-                color.push(_.random(0, 10));
-                color.push(_.random(0, 10));
-                color.push(_.random(0, 10));
-                color.push(_.random(0, 10));
-                color.push(_.random(0, 10));
-                color.push(_.random(0, 10));
+                color.push(0);
+                color.push(_.random(0, 255));
+                color.push(0);
+                color.push(_.random(0, 255));
+                color.push(0);
+                color.push(_.random(0, 255));
                 if (!msgMap.containsKey(message)) {
-                    node = new Node(i, message, color, 20);
-                    nodes.push(node);
-                    msgMap.put(message, i);
+                    var node = new Node(i+1, message, color, 20);
+                    nodes[i+1] = node;
+                    msgMap.put(message, i+1);
                 } else {
-                    var id = msgMap.get(message);
+                    // console.log(i+1);
+                    console.log(message);
+                    const id = msgMap.get(message);
+                    // console.log("size: " + nodes.length + "id: " + id);
                     var size = nodes[id].size;
-                    console.log(size);
                     msgMap.remove(message);
-                    msgMap.put(message, id);
-                    node[id] = new Node(id, message, color, parseInt(size) + 5);
+                    msgMap.put(message, i+1);
+                    nodes[id] = new Node(id, message, color, parseInt(size) + 5);
 
                 }
             }
+
 
             function Relation(id_1, id_2) {
                 this.id_1 = id_1;
@@ -348,6 +353,9 @@ router.get('/live', function (req, res, next) {
 
             var relationship = new Array();
             for (i = 1; i < nodes.length; i++) {
+                if(nodes[i]==undefined) {
+                    i++;
+                }
                 relationship.push(new Relation("-1", nodes[i].id));
             }
 
@@ -360,6 +368,55 @@ router.get('/live', function (req, res, next) {
         }
     )
 });
+
+router.get('/like', function (req, res, next) {
+    request(
+        'https://graph.facebook.com/v2.9/516006922092266/comments?fields=reactions&access_token=' + access_token,
+        function (error, response, body) {
+            var json = JSON.parse(body);
+            // console.log(json.data);
+            var emoMap = new HashMap();
+            for(i=0;i<json.data.length;i++) {
+                if(json.data[i].reactions!=undefined) {
+                    // console.log(json.data[i].reactions.data);
+                    var emotion = json.data[i].reactions.data[0].type;
+                    // console.log(emotion);
+                    if(emoMap.containsKey(emotion)) {
+                        var count = emoMap.get(emotion);
+                        emoMap.remove(emotion);
+                        emoMap.put(emotion, count+1);
+                    } else {
+                        emoMap.put(emotion, 1);
+                    }
+                }
+            }
+
+            function Emotion(emotion,count) {
+                this.emotion = emotion;
+                this.count = count;
+            }
+
+
+            var emotions = new Array();
+            var keys = emoMap.keySet();
+            // console.log(keys);
+            for(i=0;i<keys.length;i++) {
+                var emotion = new Emotion(keys[i], emoMap.get(keys[i]));
+                emotions.push(emotion);
+                console.log(emotion);
+            }
+
+            var result_data = JSON.stringify(emotions);
+            console.log(result_data);
+
+            console.log('error:', error); // Print the error if one occurred
+            console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+            // console.log('body:', body) // Print the HTML for the Google homepage.
+            res.send(result_data);
+        }
+    )
+});
+
 router.get('/change', function (req, res, next) {
 
 });
@@ -403,12 +460,12 @@ router.get('/getdata', function (req, res, next) {
                         var id = parent_node_id;
                         var name = parent_question;
                         var color = new Array();
-                        color.push(_.random(0, 10));
-                        color.push(_.random(0, 10));
-                        color.push(_.random(0, 10));
-                        color.push(_.random(0, 10));
-                        color.push(_.random(0, 10));
-                        color.push(_.random(0, 10));
+                        color.push(0);
+                        color.push(_.random(0, 255));
+                        color.push(0);
+                        color.push(_.random(0, 255));
+                        color.push(0);
+                        color.push(_.random(0, 255));
                         //
                         var size = 40;
                         var tmp = {
