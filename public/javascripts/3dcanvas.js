@@ -51,10 +51,10 @@ var SCREEN_WIDTH = window.innerWidth,
     camera, scene, renderer;
 init();
 animate();
-function textSprite(text, params) {
+function textSprite(text, _color, params) {
     var font = "Helvetica",
         size = 10,
-        color = "#427af4";
+        color = _color;
 
     font = "bold " + size + "px " + font;
 
@@ -114,9 +114,9 @@ function init() {
             context.fill();
         }
     });
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i < 1000; i++) {
         // particle = new THREE.Sprite( material );
-        text = textSprite("LIKE", {});
+        text = textSprite("LIKE", "#00FF00", {});
         text.position.x = Math.random() * 2 - 1;
         text.position.y = Math.random() * 2 - 1;
         text.position.z = Math.random() * 2 - 1;
@@ -187,8 +187,8 @@ function animate() {
     render();
 }
 function render() {
-    camera.position.x += ( mouseX - camera.position.x ) * .05;
-    camera.position.y += ( - mouseY + 200 - camera.position.y ) * .05;
+    // camera.position.x += ( mouseX - camera.position.x ) * .05;
+    // camera.position.y += ( - mouseY + 200 - camera.position.y ) * .05;
     camera.lookAt( new THREE.Vector3(0,0,0) );
     renderer.render( scene, camera );
 }
