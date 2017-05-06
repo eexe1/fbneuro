@@ -190,7 +190,7 @@ function getLive() {
     if (index > 365) {
         return;
     }
-    $.get("comment/getdata?times=" + index, function (data) {
+    $.get("comment/getdata1?times=" + index, function (data) {
         if (data === undefined) {
             alert("Error");
             return;
@@ -233,4 +233,4 @@ function getLive() {
 getLive();
 setInterval(function () {
     getLive();
-}, 5000);
+}, 2000);
