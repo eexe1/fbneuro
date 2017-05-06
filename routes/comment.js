@@ -8,7 +8,8 @@ var async  =require("async")
 var db = new neo4j(
   'http://fb-hackathon:b.rFQqK9s1nX47.wpq2kglzGgEvDQpd@hobby-cjemgdgfojekgbkegdhoogpl.dbs.graphenedb.com:24789'
 );
-
+var parent_node_id = 21;
+var parent_question = "This is a question";
 var Schema = mongoose.Schema
 var Item = new Schema({
   user_id: {
@@ -77,7 +78,7 @@ router.get('/test1', function (req, res, next) {
             }
             var json = JSON.parse(body);
             console.log(json.data);
-            var question_id = req.query.q_id  == null ? 21 : req.query.q_id;
+            var question_id = req.query.q_id  == null ? parent_node_id : req.query.q_id;
             if(json == null || json.data ==null ||json.data.length == 0){
               return res.send("no data");
             }
@@ -145,7 +146,7 @@ router.get('/test1', function (req, res, next) {
 });
 
 router.get('/test11', function(req, res, next){
-    var question_id = req.query.q_id  == null ? 21 : req.query.q_id;
+    var question_id = req.query.q_id  == null ? parent_node_id : req.query.q_id;
     var sql_root = 'MATCH (s) WHERE ID(s) = '+question_id+' MATCH (s)-[:Answer]->(m) return m';
     console.log(sql_root);
     // var sql_child = 'Match(n:Children) return n';
@@ -175,6 +176,29 @@ router.get('/test11', function(req, res, next){
                   var result_data = {};
                   var node = new Array();
                   var relationship = new Array();
+                  //parent_node
+                  /*
+                  */
+                  var id = parent_node_id;
+                  var name = parent_question;
+                  var color = new Array();
+                  color.push(_.random(0,10));
+                  color.push(_.random(0,10));
+                  color.push(_.random(0,10));
+                  color.push(_.random(0,10));
+                  color.push(_.random(0,10));
+                  color.push(_.random(0,10));
+                  var size  = _.random(20,40);
+                  var tmp = {
+                       id : id,
+                       name: name,
+                       color : color,
+                       size: size
+
+                     }
+                     node.push(tmp);
+                  /*
+                  */
                   for(var i = 0; i < result.length; i++){
                     var id = result[i]["node_id"];
                     var name = result[i]["message"];
