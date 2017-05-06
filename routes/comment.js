@@ -146,27 +146,141 @@ router.get('/test1', function (req, res, next) {
 
 router.get('/test10', function (req, res, next) {
     request(
-        'https://graph.facebook.com/v2.9/516006922092266/comments/access_token=EAACEdEose0cBABZBcq2Ow3MFTGBupfydEYps0KILwsvZB6aOvelpZB1FVZBIQFDeW69fMZC7Qn2uysMfsPyoidxliS1Rt9nSVC8wY5tUz93UBcAnuua044gQ8PzbJNijnABAMkODf631msNzuTZC3gvPDDUCmwoJvtxJRGVcf0IGXtQV0Nm9d4a8laleB3fGwZD',
+        'https://graph.facebook.com/v2.9/516006922092266/comments?access_token=EAACEdEose0cBAKcZCSZBNpLrKF0QSZAHkNHaYIZCpAhYbJoMAr1BHPr2GVYYmzbZAxiHhZBNP5TrZBt15AJSHpsDXgW3QYk5BZC7fJ38quDLYf8O4sX4ZAikV9O5RnFORnJpr6O6awPvBOmw8cYyBFsb4AUMlEkVXemOnwCDVQ3SAXFWUESSI0RJJDYagJHlaEb8ZD',
         function (error, response, body) {
             var json = JSON.parse(body);
             console.log(json.data);
-            for(i=0;i<json.data.length;i++) {
-                var createTime = json.data[i].created_time;
-                var message = json.data[i].message;
-                console.log(createTime);
-                console.log(message);
-            }
-            var node = [];
-            function node(id,name,color,size) {
+            var color = new Array();
+            color.push(_.random(0,10));
+            color.push(_.random(0,10));
+            color.push(_.random(0,10));
+            color.push(_.random(0,10));
+            color.push(_.random(0,10));
+            color.push(_.random(0,10));
+            var nodes = new Array();
+            var node;
+            node = new Node("-1","Sample centre",color,40);
+            nodes.push(node);
+            function Node(id,name,color,size) {
                 this.id = id;
                 this.name = name;
                 this.color = color;
                 this.size = size;
             }
+
+
+            function HashMap(){
+                var length = 0;
+                var obj = new Object();
+
+                this.isEmpty = function(){
+                    return length == 0;
+                };
+
+                this.containsKey=function(key){
+                    return (key in obj);
+                };
+
+                this.containsValue=function(value){
+                    for(var key in obj){
+                        if(obj[key] == value){
+                            return true;
+                        }
+                    }
+                    return false;
+                };
+
+                this.put=function(key,value){
+                    if(!this.containsKey(key)){
+                        length++;
+                    }
+                    obj[key] = value;
+                };
+
+                this.get=function(key){
+                    return this.containsKey(key)?obj[key]:null;
+                };
+
+                this.remove=function(key){
+                    if(this.containsKey(key)&&(delete obj[key])){
+                        length--;
+                    }
+                };
+
+                this.values=function(){
+                    var _values= new Array();
+                    for(var key in obj){
+                        _values.push(obj[key]);
+                    }
+                    return _values;
+                };
+
+                this.keySet=function(){
+                    var _keys = new Array();
+                    for(var key in obj){
+                        _keys.push(key);
+                    }
+                    return _keys;
+                };
+
+                this.size = function(){
+                    return length;
+                };
+
+                this.clear = function(){
+                    length = 0;
+                    obj = new Object();
+                };
+            }
+
+            var msgMap = new HashMap();
+            for(i=0;i<json.data.length;i++) {
+                var message = json.data[i].message;
+                console.log(message);
+                var color = new Array();
+                color.push(_.random(0,10));
+                color.push(_.random(0,10));
+                color.push(_.random(0,10));
+                color.push(_.random(0,10));
+                color.push(_.random(0,10));
+                color.push(_.random(0,10));
+                if(!msgMap.containsKey(message)) {
+                    node = new Node(i,message,color,20);
+                    nodes.push(node);
+                    msgMap.put(message,i);
+                } else {
+                    var id = msgMap.get(message);
+                    var size = nodes[id].size;
+                    console.log(size);
+                    msgMap.remove(message);
+                    msgMap.put(message, id);
+                    node[id] = new Node(id,message,color,parseInt(size) +5);
+
+                }
+        }
+
+        function Relation(id_1,id_2) {
+            this.id_1 = id_1;
+            this.id_2 = id_2;
+        }
+
+        var relationship = new Array();
+        for(i=1;i<nodes.length;i++) {
+            relationship.push(new Relation("parent", nodes[i].id));
+        }
+
+        var jsonNode = JSON.stringify(nodes);
+        var jsonRelation = JSON.stringify(relationship);
+
+        function finalJson(nodes, relations) {
+            this.nodes = nodes;
+            this.relationship = relations;
+        }
+
             console.log('error:', error) // Print the error if one occurred
             console.log('statusCode:', response && response.statusCode) // Print the response status code if a response was received
             // console.log('body:', body) // Print the HTML for the Google homepage.
-            res.send(body);
+            res.send(JSON.stringify(new finalJson(jsonNode, jsonRelation)));
         }
     )
 });
