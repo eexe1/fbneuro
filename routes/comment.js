@@ -14,8 +14,8 @@ router.get('/test1', function (req, res, next) {
   request(
     'https://graph.facebook.com/v2.9/1522579937766909?fields=comments%2Cformat&access_token=EAACEdEose0cBAOEnjGkEkOZCoNPNd4enRUjFZBvFZCLWwIHZAG7Dtp76TA8iSO6saoc9VdeyilfdwrxYGoNXPfQ4QAKqjgofZAIPU523mfAYdKJzjJuuOHq8ZBi6R8ljZBsEHVZCu33E8nKElZBWKIGNTrEs7xZAVjL2eIpumycf7X4M1LV54JKZBAd4vVMo8MgmfwZD',
     function (error, response, body) {
-      console.log('error:', error) // Print the error if one occurred
-      console.log('statusCode:', response && response.statusCode) // Print the response status code if a response was received
+      console.log('error:', error); // Print the error if one occurred
+      console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
       // console.log('body:', body) // Print the HTML for the Google homepage.
       res.send(body)
     }
@@ -25,7 +25,10 @@ router.get('/test1', function (req, res, next) {
 router.get('/test2', function(req, res, next){
   var sql_root = 'Match(n:Admin) return n';
   var sql_child = 'Match(n:Children) return n';
-  var json = {"label":"test", "color":"#00A0B0", "size":10};
+  var json = {
+      "nodes": [{id:"22",name:"Like",color:[1,1,2,3,4,5],size:20},{id:23,name:"Angry",color:[1,5,5,5,1,1],size:25}],
+      "relationship": [{"id_1":"22","id_2":"23"}]
+  };
 
   db.cypherQuery(sql_root, function (err, result) {
     if (err) {
